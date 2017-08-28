@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using AspNetCore.Entity;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -13,6 +14,7 @@ using Microsoft.Extensions.Options;
 using AspNetCore.Web.Models;
 using AspNetCore.Web.Models.AccountViewModels;
 using AspNetCore.Web.Services;
+using Microsoft.AspNetCore.Server.HttpSys;
 
 namespace AspNetCore.Web.Controllers
 {
@@ -20,14 +22,14 @@ namespace AspNetCore.Web.Controllers
     [Route("[controller]/[action]")]
     public class AccountController : Controller
     {
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
         private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
 
         public AccountController(
-            UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager,
+            UserManager<User> userManager,
+            SignInManager<User> signInManager,
             IEmailSender emailSender,
             ILogger<AccountController> logger)
         {
@@ -46,9 +48,13 @@ namespace AspNetCore.Web.Controllers
         {
             // Clear the existing external cookie to ensure a clean login process
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
-
+            var loginProviders = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             ViewData["ReturnUrl"] = returnUrl;
-            return View();
+            var model = new LoginViewModel
+            {
+                LoginProviders = loginProviders
+            };
+            return View(model);
         }
 
         [HttpPost]
@@ -220,7 +226,7 @@ namespace AspNetCore.Web.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new User { UserName = model.Email, Email = model.Email };
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -310,7 +316,7 @@ namespace AspNetCore.Web.Controllers
                 {
                     throw new ApplicationException("Error loading external login information during confirmation.");
                 }
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new User { UserName = model.Email, Email = model.Email };
                 var result = await _userManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
