@@ -1,42 +1,43 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using AspNetCore.Entity;
+using AspNetCore.Entity.Idintity;
+using AspNetCore.Services;
+using AspNetCore.Web.Core.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using AspNetCore.Web.Models;
 using AspNetCore.Web.Models.AccountViewModels;
 using AspNetCore.Web.Services;
-using Microsoft.AspNetCore.Server.HttpSys;
 
 namespace AspNetCore.Web.Controllers
 {
     [Authorize]
     [Route("[controller]/[action]")]
-    public class AccountController : Controller
+    public class AccountController : AppBaseController
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
+        private readonly UserService _userService;
 
-        public AccountController(
+        public AccountController(IAppService appService,
             UserManager<User> userManager,
             SignInManager<User> signInManager,
+            RoleManager<MyRole> roleManager,
             IEmailSender emailSender,
-            ILogger<AccountController> logger)
+            ILogger<AccountController> logger): base(appService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
             _logger = logger;
+            _userService = new UserService(DataContextFactory, userManager, roleManager);
         }
 
         [TempData]
@@ -227,7 +228,7 @@ namespace AspNetCore.Web.Controllers
             if (ModelState.IsValid)
             {
                 var user = new User { UserName = model.UserName, Email = model.Email, Gender = model.Gender, PhoneNumber = model.PhoneNumber};
-                var result = await _userManager.CreateAsync(user, model.Password);
+                var result = await _userService.CreateUserAsync(user, model.Password);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");

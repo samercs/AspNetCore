@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
 using AspNetCore.Entity;
 using AspNetCore.Entity.Idintity;
 using Microsoft.AspNetCore.Identity;
@@ -24,17 +26,50 @@ namespace AspNetCore.Data
 
         public override int SaveChanges()
         {
-            throw new System.NotImplementedException();
+            try
+            {
+                return base.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
 
-        public Task<int> SaveChangesAsync()
+        public async Task<int> SaveChangesAsync()
         {
-            throw new System.NotImplementedException();
+            try
+            {
+                var addedEntities = ChangeTracker.Entries()
+                    .Where(i => i.State == EntityState.Added)
+                    .Where(i => i.Entity is EntityBase);
+
+                foreach (var entity in addedEntities)
+                {
+                    ((EntityBase)entity.Entity).CreatedUtc = DateTime.UtcNow;
+                }
+
+                var modifiedEntities = ChangeTracker.Entries()
+                    .Where(i => i.State == EntityState.Modified)
+                    .Where(i => i.Entity is EntityBase);
+
+                foreach (var entity in modifiedEntities)
+                {
+                    ((EntityBase)entity.Entity).ModifiedUtc = DateTime.UtcNow;
+                }
+                return await base.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
 
         public void SetModified(object entity)
         {
-            throw new System.NotImplementedException();
+            base.Entry(entity).State = EntityState.Modified;
         }
     }
 }
