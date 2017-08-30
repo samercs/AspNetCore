@@ -1,11 +1,13 @@
 ﻿using System.Threading.Tasks;
 using AspNetCore.Entity;
+using AspNetCore.Entity.Idintity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace AspNetCore.Data
 {
-    public class DataContext: IdentityDbContext<User> ,IDataContext
+    public class DataContext: IdentityDbContext<User, MyRole, int> ,IDataContext
     {
         public DataContext(DbContextOptions options) 
             : base(options) 

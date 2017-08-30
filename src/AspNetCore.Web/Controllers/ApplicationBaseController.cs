@@ -10,7 +10,7 @@ namespace AspNetCore.Web.Controllers
 {
     public class AppBaseController : Controller
     {
-        private readonly IAppService AppServices;
+        public readonly IAppService AppServices;
         protected readonly IDataContextFactory DataContextFactory;
         protected AppBaseController(IAppService appServices)
         {

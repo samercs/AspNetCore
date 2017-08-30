@@ -1,6 +1,9 @@
 ﻿using System;
 using AspNetCore.Data;
 using AspNetCore.Entity;
+using AspNetCore.Entity.Idintity;
+using AspNetCore.Web.Core.Configration;
+
 using AspNetCore.Web.Core.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
@@ -9,6 +12,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using AspNetCore.Web.Services;
+
 
 namespace AspNetCore.Web
 {
@@ -27,7 +31,7 @@ namespace AspNetCore.Web
             services.AddDbContext<DataContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity<User, IdentityRole>()
+            services.AddIdentity<User, MyRole>()
                 .AddEntityFrameworkStores<DataContext>()
                 .AddDefaultTokenProviders();
 
@@ -51,6 +55,7 @@ namespace AspNetCore.Web
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddSingleton<IDataContextFactory>(new DataContextFactory(Configuration.GetConnectionString("DefaultConnection")));
             services.AddSingleton<IAppService, AppService>();
+            services.Configure<AppSettings>(Configuration.GetSection("AppSetting"));
 
             services.AddMvc();
         }
