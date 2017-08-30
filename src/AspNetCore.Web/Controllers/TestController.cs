@@ -40,6 +40,11 @@ namespace AspNetCore.Web.Controllers
             return Content(result);
         }
 
+        public IActionResult TestAnimateCss()
+        {
+            return View();
+        }
+
         
     }
 }
