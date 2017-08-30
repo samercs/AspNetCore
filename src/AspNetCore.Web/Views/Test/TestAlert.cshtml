@@ -1,0 +1,18 @@
+﻿@model object
+
+@{
+    ViewBag.Title = "Test Alert";
+    
+}
+
+<h2>@ViewBag.Title</h2>
+@section Scripts{
+    <script>
+        $(function() {
+            alertify
+                .alert("This is an alert dialog.", function(){
+                    alertify.message('OK');
+                });
+        });
+    </script>
+}
