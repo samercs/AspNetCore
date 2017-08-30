@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using AspNetCore.Entity.Enum;
+using AspNetCore.Entity.Idintity;
 using Microsoft.AspNetCore.Identity;
 
 namespace AspNetCore.Entity
@@ -18,5 +20,6 @@ namespace AspNetCore.Entity
         public DateTime? DeletedUtc { get; set; }
         [Timestamp]
         public byte[] RowVersion { get; set; }
+        
     }
 }
