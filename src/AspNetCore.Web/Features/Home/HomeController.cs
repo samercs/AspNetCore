@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 using AspNetCore.Web.Core.Services;
-using Microsoft.AspNetCore.Mvc;
+using AspNetCore.Web.Features.Shared;
 using AspNetCore.Web.Models;
+using Microsoft.AspNetCore.Mvc;
 
-namespace AspNetCore.Web.Controllers
+namespace AspNetCore.Web.Features.Home
 {
     public class HomeController : AppBaseController
     {

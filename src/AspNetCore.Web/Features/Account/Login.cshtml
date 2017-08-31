@@ -52,7 +52,7 @@
             <hr />
             @{
                 var loginProviders = Model.LoginProviders;
-                if (loginProviders.Count == 0)
+                if (loginProviders == null || loginProviders?.Count == 0)
                 {
                     <div>
                         <p>

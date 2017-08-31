@@ -6,15 +6,18 @@ using AspNetCore.Entity;
 using AspNetCore.Entity.Idintity;
 using AspNetCore.Services;
 using AspNetCore.Web.Core.Services;
+using AspNetCore.Web.Extensions;
+using AspNetCore.Web.Features.Home;
+using AspNetCore.Web.Features.Shared;
+using AspNetCore.Web.Models.AccountViewModels;
+using AspNetCore.Web.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using AspNetCore.Web.Models.AccountViewModels;
-using AspNetCore.Web.Services;
 
-namespace AspNetCore.Web.Controllers
+namespace AspNetCore.Web.Features.Account
 {
     [Authorize]
     [Route("[controller]/[action]")]

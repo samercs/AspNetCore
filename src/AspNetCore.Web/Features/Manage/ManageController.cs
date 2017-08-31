@@ -1,21 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using AspNetCore.Entity;
+using AspNetCore.Web.Extensions;
+using AspNetCore.Web.Models.ManageViewModels;
+using AspNetCore.Web.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using AspNetCore.Web.Models;
-using AspNetCore.Web.Models.ManageViewModels;
-using AspNetCore.Web.Services;
 
-namespace AspNetCore.Web.Controllers
+namespace AspNetCore.Web.Features.Manage
 {
     [Authorize]
     [Route("[controller]/[action]")]

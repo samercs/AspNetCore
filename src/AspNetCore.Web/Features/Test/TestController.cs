@@ -1,16 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using AspNetCore.Entity;
 using AspNetCore.Entity.Enum;
 using AspNetCore.Entity.Idintity;
 using AspNetCore.Services;
 using AspNetCore.Web.Core.Services;
+using AspNetCore.Web.Features.Shared;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AspNetCore.Web.Controllers
+namespace AspNetCore.Web.Features.Test
 {
     public class TestController : AppBaseController
     {
