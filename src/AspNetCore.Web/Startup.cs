@@ -90,6 +90,7 @@ namespace AspNetCore.Web
                 });
 
             services.AddRouting(options => options.LowercaseUrls = true);
+            services.AddKendo();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -116,6 +117,7 @@ namespace AspNetCore.Web
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+            app.UseKendo(env);
         }
     }
 }

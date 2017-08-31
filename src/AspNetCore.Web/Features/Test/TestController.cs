@@ -49,6 +49,11 @@ namespace AspNetCore.Web.Features.Test
             return View();
         }
 
+        public IActionResult TestKendo()
+        {
+            return View();
+        }
+
         
     }
 }

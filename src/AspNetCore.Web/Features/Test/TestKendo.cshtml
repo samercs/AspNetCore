@@ -1,0 +1,12 @@
+﻿@using Kendo.Mvc.UI
+@model object
+
+@{
+    ViewBag.Title = "Test Kendo";
+
+}
+
+<h2>@ViewBag.Title</h2>
+@(Html.Kendo().DatePicker()
+      .Name("datepicker")
+      )
