@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AspNetCore.Entity;
 using AspNetCore.Entity.Enum;
@@ -6,6 +7,9 @@ using AspNetCore.Entity.Idintity;
 using AspNetCore.Services;
 using AspNetCore.Web.Core.Services;
 using AspNetCore.Web.Features.Shared;
+using AspNetCore.Web.Models.TestViewModels;
+using Kendo.Mvc.Extensions;
+using Kendo.Mvc.UI;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -49,11 +53,32 @@ namespace AspNetCore.Web.Features.Test
             return View();
         }
 
-        public IActionResult TestKendo()
+        public  IActionResult TestKendo()
         {
-            return View();
+            var users = new List<TestGridViewModel> ()
+            {
+                new TestGridViewModel()
+                {
+                    Id = "1",
+                    Name = "Samer"
+                },
+                new TestGridViewModel()
+                {
+                    Id = "2",
+                    Name = "Asmaa"
+                }
+            };
+            return View(users);
         }
 
-        
+        //public async Task<JsonResult> GetUsers([DataSourceRequest] DataSourceRequest request)
+        //{
+        //    var users = await _userService.GetUsers();
+        //    var result = users.ToDataSourceResult(request);
+        //    return KendoJson(result);
+        //}
+
+
+
     }
 }

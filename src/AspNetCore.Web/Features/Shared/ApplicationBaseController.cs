@@ -1,6 +1,8 @@
 ﻿using AspNetCore.Data;
 using AspNetCore.Web.Core.Services;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace AspNetCore.Web.Features.Shared
 {
@@ -12,6 +14,16 @@ namespace AspNetCore.Web.Features.Shared
         {
             AppServices = appServices;
             DataContextFactory = appServices.DataContextFactory;
+        }
+
+        protected JsonResult KendoJson(object data)
+        {
+            return Json(data, new JsonSerializerSettings
+            {
+                ContractResolver = new DefaultContractResolver(),
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                PreserveReferencesHandling = PreserveReferencesHandling.None
+            });
         }
     }
 }

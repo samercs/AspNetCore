@@ -1,5 +1,9 @@
-﻿@using Kendo.Mvc.UI
-@model object
+﻿@using System.Collections.Generic
+@using AspNetCore.Entity
+@using AspNetCore.Web.Extensions
+@using AspNetCore.Web.Models.TestViewModels
+@using Kendo.Mvc.UI
+@model IList<TestGridViewModel>
 
 @{
     ViewBag.Title = "Test Kendo";
@@ -7,6 +11,20 @@
 }
 
 <h2>@ViewBag.Title</h2>
-@(Html.Kendo().DatePicker()
-      .Name("datepicker")
+
+@(Html.Kendo().ListView<TestGridViewModel>(Model)
+      .Name("listView")
+      .TagName("div")
+      .Pageable()
+      .Deferred()
       )
+
+@section Scripts{ 
+@Html.Kendo().DeferredScripts()
+    <script>
+        
+        
+    </script>
+}
+
+
